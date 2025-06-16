@@ -18,7 +18,7 @@ const Card = ({
   ...rest 
 }) => {
   // Base classes
-  const baseClasses = 'rounded-lg overflow-hidden';
+  const baseClasses = 'rounded-lg overflow-hidden w-full transition-all duration-300 ease-in-out hover:shadow-md';
   
   // Variant classes
   const variantClasses = {
@@ -33,11 +33,11 @@ const Card = ({
   return (
     <div className={cardClasses} {...rest}>
       {title && (
-        <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">{title}</h3>
+        <div className="border-b border-gray-200 dark:border-gray-700 px-6 py-5 transition-colors duration-300 ease-in-out">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white transition-colors duration-300 ease-in-out">{title}</h3>
         </div>
       )}
-      <div className="p-4">
+      <div className="w-full h-full transition-colors duration-300 ease-in-out">
         {children}
       </div>
     </div>

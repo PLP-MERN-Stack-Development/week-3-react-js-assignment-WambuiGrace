@@ -71,31 +71,31 @@ const TaskManager = () => {
   };
 
   return (
-    <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg h-full flex flex-col">
-      <h2 className="text-2xl font-bold mb-6">Task Manager</h2>
+    <div className="w-full h-full flex flex-col p-4 sm:p-6">
 
       {/* Task input form */}
-      <form onSubmit={handleSubmit} className="mb-6">
-        <div className="flex gap-2">
+      <form onSubmit={handleSubmit} className="mb-8 w-full">
+        <div className="flex gap-3 w-full">
           <input
             type="text"
             value={newTaskText}
             onChange={(e) => setNewTaskText(e.target.value)}
             placeholder="Add a new task..."
-            className="flex-grow px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
+            className="flex-grow px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 text-lg"
           />
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" className="px-6 py-3 text-lg">
             Add Task
           </Button>
         </div>
       </form>
 
       {/* Filter buttons */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-3 mb-6">
         <Button
           variant={filter === 'all' ? 'primary' : 'secondary'}
           size="sm"
           onClick={() => setFilter('all')}
+          className="px-4 py-2"
         >
           All
         </Button>
@@ -103,6 +103,7 @@ const TaskManager = () => {
           variant={filter === 'active' ? 'primary' : 'secondary'}
           size="sm"
           onClick={() => setFilter('active')}
+          className="px-4 py-2"
         >
           Active
         </Button>
@@ -110,25 +111,26 @@ const TaskManager = () => {
           variant={filter === 'completed' ? 'primary' : 'secondary'}
           size="sm"
           onClick={() => setFilter('completed')}
+          className="px-4 py-2"
         >
           Completed
         </Button>
       </div>
 
       {/* Task list */}
-      <div className="flex-grow overflow-y-auto mb-4">
-        <ul className="space-y-2">
+      <div className="flex-grow overflow-y-auto mb-6">
+        <ul className="space-y-3">
           {filteredTasks.length === 0 ? (
-            <li className="text-gray-500 dark:text-gray-400 text-center py-8 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg">
+            <li className="text-gray-500 dark:text-gray-400 text-center py-12 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg">
               No tasks found
             </li>
           ) : (
             filteredTasks.map((task) => (
               <li
                 key={task.id}
-                className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700 transition-colors duration-150"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   <input
                     type="checkbox"
                     checked={task.completed}
@@ -136,7 +138,7 @@ const TaskManager = () => {
                     className="h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
                   />
                   <span
-                    className={`${
+                    className={`text-base ${
                       task.completed ? 'line-through text-gray-500 dark:text-gray-400' : ''
                     }`}
                   >
@@ -148,6 +150,7 @@ const TaskManager = () => {
                   size="sm"
                   onClick={() => deleteTask(task.id)}
                   aria-label="Delete task"
+                  className="px-3"
                 >
                   Delete
                 </Button>
@@ -158,9 +161,12 @@ const TaskManager = () => {
       </div>
 
       {/* Task stats */}
-      <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+      <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400 flex justify-between items-center">
         <p>
           {tasks.filter((task) => !task.completed).length} tasks remaining
+        </p>
+        <p>
+          {tasks.length} total tasks
         </p>
       </div>
     </div>
