@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 /**
@@ -71,13 +72,23 @@ const Footer = ({
         </div>
         <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 flex flex-wrap justify-center space-x-6">
           {links.map((link, index) => (
-            <a 
-              key={index} 
-              href={link.href} 
-              className="text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 text-sm"
-            >
-              {link.text}
-            </a>
+            link.href.startsWith('/') ? (
+              <Link 
+                key={index} 
+                to={link.href} 
+                className="text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 text-sm"
+              >
+                {link.text}
+              </Link>
+            ) : (
+              <a 
+                key={index} 
+                href={link.href} 
+                className="text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 text-sm"
+              >
+                {link.text}
+              </a>
+            )
           ))}
         </div>
       </div>
