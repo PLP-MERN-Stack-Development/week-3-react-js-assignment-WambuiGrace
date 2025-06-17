@@ -13,8 +13,8 @@ export default function Home() {
     const fetchFeaturedPosts = async () => {
       try {
         setLoading(true);
-        // Fetch only 2 posts for the featured section
-        const response = await fetch('https://posts-api-ewav.onrender.com/posts?limit=2');
+        // Fetch only 2 posts for the featured section from DummyJSON
+        const response = await fetch('https://dummyjson.com/posts?limit=2');
         
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -22,9 +22,9 @@ export default function Home() {
         
         const result = await response.json();
         
-        // Check if the response has the expected structure
-        if (result && Array.isArray(result.data)) {
-          setFeaturedPosts(result.data);
+        // DummyJSON returns posts in a 'posts' array
+        if (result && Array.isArray(result.posts)) {
+          setFeaturedPosts(result.posts);
         } else {
           // If the API doesn't return the expected structure, handle it gracefully
           setFeaturedPosts(Array.isArray(result) ? result : []);
@@ -64,22 +64,27 @@ export default function Home() {
             <div className="space-y-4">
               {featuredPosts.map((post) => (
                 <div key={post.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  {post.image && (
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={post.image} 
-                        alt={post.title || 'Post image'} 
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = 'https://via.placeholder.com/400x200?text=No+Image';
-                        }}
-                      />
-                    </div>
-                  )}
+                  <div className="h-48 overflow-hidden bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center justify-center">
+                    <img 
+                      src={`https://source.unsplash.com/300x200/?${encodeURIComponent(post.tags?.[0] || 'blog')}`} 
+                      alt={post.title || 'Post image'} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://via.placeholder.com/400x200?text=No+Image';
+                      }}
+                    />
+                  </div>
                   <div className="p-4">
-                    <h3 className="text-lg font-medium text-gray-800 mb-2">{post.title}</h3>
+                    <h3 className="text-lg font-medium text-gray-300 mb-2">{post.title}</h3>
                     <p className="text-gray-600 line-clamp-3 mb-4">{post.body}</p>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="mb-3 flex flex-wrap gap-1">
+                        {post.tags.slice(0, 3).map(tag => (
+                          <span key={tag} className="px-2 py-1 bg-gray-100 text-xs rounded-full text-gray-600">#{tag}</span>
+                        ))}
+                      </div>
+                    )}
                     <Link to={`/api`} className="inline-block">
                       <Button variant="primary" size="sm">
                         Read More
