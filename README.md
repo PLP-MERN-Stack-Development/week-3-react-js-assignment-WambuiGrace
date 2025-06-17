@@ -3,6 +3,16 @@
 
 This assignment focuses on building a responsive React application using JSX and Tailwind CSS, implementing component architecture, state management, hooks, and API integration.
 
+## Screenshots
+### Home
+![Home](./InnovateHub/src/assets/home.png)
+
+### About
+![About](./InnovateHub/src/assets/about.png)
+
+### Posts (API) 
+![Posts](./InnovateHub/src/assets/api-posts.png)
+
 ## Assignment Overview
 
 You will:
