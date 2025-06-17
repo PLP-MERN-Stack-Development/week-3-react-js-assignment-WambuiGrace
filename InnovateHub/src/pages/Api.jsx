@@ -10,7 +10,7 @@ export default function Api() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Using JSONPlaceholder as a demo API
+        //Using fake rest api data
         const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
         
         if (!response.ok) {
@@ -33,7 +33,7 @@ export default function Api() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">API Demo</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Posts</h1>
       
       <Card title="API Data" variant="elevated" className="mb-6">
         {loading ? (
@@ -62,10 +62,7 @@ export default function Api() {
         <div className="p-6">
           <p className="text-gray-700 dark:text-gray-300 mb-4">
             This page demonstrates fetching data from an external API and displaying it in a structured format.
-            We're using the JSONPlaceholder API, which provides fake data for testing and prototyping.
-          </p>
-          <p className="text-gray-700 dark:text-gray-300">
-            In a real application, you would replace this with your actual API endpoints.
+            We're using the JSONPlaceholder API.
           </p>
         </div>
       </Card>
