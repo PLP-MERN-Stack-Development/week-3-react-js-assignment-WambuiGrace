@@ -13,14 +13,12 @@ This assignment focuses on building a responsive React application using JSX and
 ### Posts (API) 
 ![Posts](./InnovateHub/src/assets/api-posts.png)
 
-## Assignment Overview
+## Site link
+Below is the link of the site
+[InnovateHub](https://week-3-react-js-assignment-wambui-g.vercel.app/)
 
-You will:
-1. Set up a React project with Vite and Tailwind CSS
-2. Create reusable UI components
-3. Implement state management using React hooks
-4. Integrate with external APIs
-5. Style your application using Tailwind CSS
+## Assignment Overview
+In this assignment, you will create a React application that demonstrates your understanding of modern web development practices. The focus will be on building a responsive UI using Tailwind CSS, managing state with React hooks, and integrating with external APIs.
 
 ## Getting Started
 
