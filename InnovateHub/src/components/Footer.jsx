@@ -100,7 +100,7 @@ Footer.propTypes = {
   ),
   socialLinks: PropTypes.arrayOf(
     PropTypes.shape({
-      icon: PropTypes.oneOf(['github', 'twitter', 'linkedin']).isRequired,
+      icon: PropTypes.oneOf(['github', 'linkedin']).isRequired,
       href: PropTypes.string.isRequired,
     })
   ),
