@@ -16,19 +16,19 @@ export default function Api() {
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchTerm(searchInput);
-    setPage(1); // Reset to first page when searching
+    setPage(1); 
   };
 
   // Function to fetch posts from the API
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      // Construct the API URL with pagination and search parameters
-      let url = `https://posts-api-ewav.onrender.com/posts?page=${page}&limit=${postsPerPage}`;
+      // Construct the API URL with pagination and search parameters using DummyJSON
+      let url = `https://dummyjson.com/posts?limit=${postsPerPage}&skip=${(page - 1) * postsPerPage}`;
       
       // Add search term if provided
       if (searchTerm) {
-        url += `&search=${encodeURIComponent(searchTerm)}`;
+        url = `https://dummyjson.com/posts/search?q=${encodeURIComponent(searchTerm)}&limit=${postsPerPage}&skip=${(page - 1) * postsPerPage}`;
       }
       
       const response = await fetch(url);
@@ -39,16 +39,11 @@ export default function Api() {
       
       const result = await response.json();
       
-      // Check if the response has the expected structure
-      if (result && Array.isArray(result.data)) {
-        setPosts(result.data);
-        // Calculate total pages if pagination info is available
-        if (result.pagination) {
-          setTotalPages(result.pagination.totalPages || 1);
-        } else {
-          // Fallback calculation if pagination info is not provided
-          setTotalPages(Math.ceil(result.total / postsPerPage) || 1);
-        }
+      // DummyJSON returns posts in a 'posts' array and includes total count
+      if (result && Array.isArray(result.posts)) {
+        setPosts(result.posts);
+        // Calculate total pages based on total posts count
+        setTotalPages(Math.ceil(result.total / postsPerPage) || 1);
       } else {
         // If the API doesn't return the expected structure, handle it gracefully
         setPosts(Array.isArray(result) ? result : []);
@@ -72,7 +67,7 @@ export default function Api() {
 
   return (
     <div className="flex flex-col items-center justify-center max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8">API Demo</h1>
+      <h1 className="text-3xl font-bold mb-8">Featured posts</h1>
       
       {/* Search Form */}
       <Card className="w-full mb-6">
@@ -131,22 +126,27 @@ export default function Api() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {posts.map((post) => (
                     <div key={post.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                      {post.image && (
-                        <div className="h-48 overflow-hidden">
-                          <img 
-                            src={post.image} 
-                            alt={post.title || 'Post image'} 
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = 'https://via.placeholder.com/400x200?text=No+Image';
-                            }}
-                          />
-                        </div>
-                      )}
+                      <div className="h-48 overflow-hidden bg-gradient-to-r from-blue-100 to-indigo-100 flex items-center justify-center">
+                        <img 
+                          src={`https://source.unsplash.com/300x200/?${encodeURIComponent(post.tags?.[0] || 'blog')}`} 
+                          alt={post.title || 'Post image'} 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://via.placeholder.com/400x200?text=No+Image';
+                          }}
+                        />
+                      </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-medium text-gray-800 mb-2">{post.title}</h3>
+                        <h3 className="text-lg font-medium text-gray-300 mb-2">{post.title}</h3>
                         <p className="text-gray-600 line-clamp-3">{post.body}</p>
+                        {post.tags && post.tags.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-1">
+                            {post.tags.map(tag => (
+                              <span key={tag} className="px-2 py-1 bg-gray-100 text-xs rounded-full text-gray-600">#{tag}</span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -214,15 +214,6 @@ export default function Api() {
             </div>
           </Card>
           
-          <Card className="w-full">
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">About This Demo</h2>
-              <p className="text-gray-600">
-                This page demonstrates how to fetch and display data from an external API in a React application.
-                Features include pagination, search functionality, and displaying posts with images.
-              </p>
-            </div>
-          </Card>
         </>
       )}
     </div>
