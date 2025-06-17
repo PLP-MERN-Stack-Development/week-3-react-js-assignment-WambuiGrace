@@ -135,7 +135,7 @@ const TaskManager = () => {
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => toggleTask(task.id)}
-                    className="h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
+                    className="h-5 w-5 text-green-600 rounded focus:ring-green-500"
                   />
                   <span
                     className={`text-base ${

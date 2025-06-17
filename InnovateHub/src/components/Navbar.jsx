@@ -16,7 +16,7 @@ const Navbar = ({
   links = [
     { text: 'Home', href: '/' },
     { text: 'About', href: '/about' },
-    { text: 'API Demo', href: '/api' },
+    { text: 'Posts', href: '/api' },
   ],
   className = '',
   ...rest 
